@@ -1,21 +1,17 @@
-self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open("weather-app-v1").then(cache => {
-      return cache.addAll([
-        "./",
-        "./index.html",
-        "./style.css",
-        "./script.js"
-      ]);
-    })
-  );
+self.addEventListener("install", () => {
+  self.skipWaiting();
 });
 
-self.addEventListener("fetch", event => {
-  event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
-  );
+self.addEventListener("activate", () => {
+  self.clients.claim();
 });
-        
+
+self.addEventListener("fetch", (event) => {
+  // 🔴 DO NOT intercept manifest or icons
+  if (
+    event.request.url.includes("manifest.json") ||
+    event.request.url.includes("icon-")
+  ) {
+    return;
+  }
+});
