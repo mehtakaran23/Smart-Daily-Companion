@@ -1,0 +1,429 @@
+:root {
+  --bg: #020617;            /* safe dark default */
+  --text: #e5e7eb;
+  --card-bg: #020617;
+  --card-border: #1e293b;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--bg);
+  color: white;
+  transition: background 0.6s ease;
+}
+
+.search-box input {
+  max-width: 260px;
+}
+
+.search-box {
+  width: 100%;
+}
+
+.search-inner {
+  display: flex;
+  align-items: center;
+}
+
+.search-inner input {
+  width: 240px;          /* controls centering */
+  border-radius: 5px;
+}
+
+.search-inner button{
+  padding: 1%;
+}
+
+body.day .dashboard-header h1::after {
+  content: " ☀️";
+}
+
+body.night .dashboard-header h1::after {
+  content: " 🌙";
+}
+
+/* Center content inside FIRST card (Weather) */
+.row > .col-lg-6:nth-child(1) .card-glass {
+  text-align: center;
+}
+
+.row > .col-lg-6:nth-child(1) .snapshot-main {
+  justify-content: center;
+}
+
+.row > .col-lg-6:nth-child(1) .details {
+  justify-content: center;
+}
+
+.row > .col-lg-6:nth-child(1) .details .col-4 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+
+/* Center content ONLY inside second card */
+.row > .col-lg-6:nth-child(2) .card-glass {
+  text-align: center;
+}
+
+.row > .col-lg-6:nth-child(2) .task-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.row > .col-lg-6:nth-child(2) .task-input {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.row > .col-lg-6:nth-child(2) #taskList {
+  width: 100%;
+  max-width: 320px;
+}
+
+.row > .col-lg-6:nth-child(2) .assistant-section {
+  max-width: 360px;
+  margin: 20px auto 0;
+}
+
+.row > .col-lg-6:nth-child(2) .assistant-input {
+  justify-content: center;
+}
+
+.row > .col-lg-6:nth-child(2) .assistant-chat {
+  text-align: left; /* chat readability */
+}
+
+
+
+/* DAY THEME */
+body.day {
+  --bg: linear-gradient(135deg, #38bdf8, #e0f2fe);
+  --glass: rgba(255, 255, 255, 0.6);
+  --text: #0f172a;
+  color: var(--text);
+}
+
+/* NIGHT THEME */
+body.night {
+  --bg: linear-gradient(135deg, #020617, #0f172a);
+  --glass: rgba(255, 255, 255, 0.12);
+  --text: #ffffff;
+  color: var(--text);
+}
+
+.dashboard-header {
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  margin: 0;
+}
+
+.dashboard-header p {
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+
+.weather-card {
+  width: 100%;
+  max-width: 1100px;
+}
+
+.card-glass {
+  padding: 20px;
+  border-radius: 20px;
+  background: var(--glass);
+  backdrop-filter: blur(18px);
+  transition: background 0.6s ease;
+}
+
+
+.snapshot-main {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  margin-top: 10px;
+}
+
+#icon {
+  width: 70px;
+}
+
+.time-section {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+#clock {
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.task-section {
+  margin-top: 10px;
+}
+
+.task-section ul {
+  max-height: 260px;
+  overflow-y: auto;
+}
+
+.task-section button{
+  margin-bottom: 5px;
+ padding: 4px 14px;
+}
+
+/* Task input – base (night mode) */
+#taskInput {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+#taskInput::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 🌞 DAY MODE FIX */
+body.day #taskInput {
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  color: #0f172a;
+}
+
+body.day #taskInput::placeholder {
+  color: rgba(15, 23, 42, 0.6);
+}
+
+
+/* Fix task list bullet alignment */
+#taskList {
+  padding-left: 0;
+  margin: 0;
+}
+
+#taskList li {
+  list-style: none;              /* remove default dot */
+  position: relative;
+  padding-left: 18px;            /* space for custom dot */
+  text-align: left;
+}
+
+/* Custom centered dot */
+#taskList li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  line-height: 1;
+}
+
+
+/* Base (already good for desktop) */
+.weather-card {
+  width: 100%;
+  max-width: 1200px;   /* dashboard width */
+  margin: auto;
+  padding: 20px;
+}
+
+/* =========================
+   SMART ASSISTANT UI
+========================= */
+
+.assistant-section {
+  margin-top: 20px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}
+
+.assistant-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 8px;
+  opacity: 0.9;
+}
+
+/* Chat bubble */
+.assistant-chat {
+  background: rgba(255,255,255,0.08);
+  border-radius: 14px;
+  padding: 12px;
+  min-height: 70px;
+  margin-bottom: 10px;
+}
+
+.assistant-reply {
+  font-size: 14px;
+  line-height: 1.4;
+  opacity: 0.95;
+}
+
+/* =========================
+   AI INPUT – THEME FIX
+========================= */
+
+/* Default (night mode) */
+.assistant-input input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255,255,255,0.2);
+  color: #ffffff;
+  padding: 10px 12px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+
+.assistant-input input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* 🌞 DAY MODE FIX */
+body.day .assistant-input input {
+  background: rgba(255, 255, 255, 0.95);
+  border: 1px solid rgba(15, 23, 42, 0.2);
+  color: #0f172a;
+}
+
+body.day .assistant-input input::placeholder {
+  color: rgba(15, 23, 42, 0.6);
+}
+
+
+.assistant-input button {
+  border-radius: 10px;
+  padding: 4px 14px;
+}
+
+.assistant-chat{
+  margin-top: 5px;
+}
+
+
+
+/* Mobile adjustments */
+@media (max-width: 576px) {
+  body {
+    padding: 12px;
+  }
+
+  .weather-card {
+    padding: 12px;
+  }
+
+
+
+  h1 {
+    font-size: 22px;
+  }
+
+  h2 {
+    font-size: 18px;
+  }
+
+  .temp {
+    font-size: 32px;
+  }
+
+  .condition {
+    font-size: 14px;
+  }
+
+  /* Search container */
+.search-box {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 12px;
+}
+
+/* Inner group */
+.search-inner {
+  display: flex;
+  gap: 8px;
+  width: 100%;
+  max-width: 320px;     /*  mobile-friendly width */
+}
+
+/* Input */
+.search-inner input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: none;
+  font-size: 16px;      /* 👈 prevents iOS zoom */
+}
+
+/* Button */
+.search-inner button {
+  padding: 10px 14px;
+  border-radius: 10px;
+}
+
+
+  img#icon {
+    width: 56px;
+  }
+
+  /* Details badges */
+  .details .col-4 {
+    padding: 4px;
+  }
+
+  .details .badge {
+    font-size: 12px;
+    padding: 6px 8px;
+  }
+
+  .meta-time {
+    font-size: 11px;
+    text-align: center;
+  }
+
+  #insight {
+    font-size: 14px;
+    text-align: center;
+  }
+
+    .row > .col-lg-6:nth-child(2) .card-glass {
+    padding: 16px;
+  }
+
+  .row > .col-lg-6:nth-child(2) .assistant-section,
+  .row > .col-lg-6:nth-child(2) .task-section {
+    max-width: 100%;
+  }
+
+  @media (max-width: 576px) {
+
+  /* Weather card spacing refinement */
+  .row > .col-lg-6:nth-child(1) .card-glass {
+    padding: 16px;
+  }
+
+  .row > .col-lg-6:nth-child(1) .snapshot-main {
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .row > .col-lg-6:nth-child(1) .details .col-4 {
+    margin-bottom: 6px;
+  }
+}
+
+}

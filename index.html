@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#38bdf8">
+
+</head>
+
+<body class="night">
+    <div class=" weather-card">
+        <header class="dashboard-header text-center">
+            <h1>Smart Daily Companion</h1>
+            <p>Your day, organized around your city</p>
+        </header>
+
+        <div class="container-fluid">
+            <div class="row g-3">
+
+                <!-- LEFT: WEATHER -->
+                <div class="col-lg-6 col-12">
+                    <div id="error" class="text-danger text-center mt-2"></div>
+
+                    <section class="card-glass h-100">
+
+                        <h1 class="text-center">🌤 Weather</h1>
+
+                        <div class="search-box d-flex justify-content-center ">
+                            <div class="search-inner d-flex gap-2">
+                                <input id="cityInput" placeholder="Enter city name" />
+                                <button class="btn btn-primary" onclick="getWeather()">Search</button>
+                            </div>
+                        </div>
+
+                        <h2 id="city" class="mt-2"></h2>
+                        <p id="localTime" class="meta-time"></p>
+                        <p id="LastUpdated" class="meta-time"></p>
+
+                        <div class="snapshot-main">
+                            <img id="icon" />
+                            <div>
+                                <div class="temp" id="temp"></div>
+                                <div class="condition" id="condition"></div>
+                            </div>
+                        </div>
+
+                        <div class="details row text-center mt-3">
+                            <div class="col-4">
+                                <div class="badge bg-primary p-2">💧 <span id="humidity"></span>%</div>
+                                <p>Humidity</p>
+                            </div>
+                            <div class="col-4">
+                                <div class="badge bg-warning p-2">☁ <span id="cloud"></span>%</div>
+                                <p>Cloud</p>
+                            </div>
+                            <div class="col-4">
+                                <div class="badge bg-success p-2">🌧 <span id="rain"></span> mm</div>
+                                <p>Rain</p>
+                            </div>
+                        </div>
+
+                        <p id="wind" class="mt-2 text-center"></p>
+                        <p id="insight" class="fw-bold text-center mt-2"></p>
+
+                    </section>
+                </div>
+
+
+                <!-- RIGHT: TIME + TASKS -->
+                <div class="col-lg-6 col-12">
+                    <section class="card-glass h-100">
+
+                        <div class="time-section">
+                            <h2 id="greeting"></h2>
+                            <p id="clock"></p>
+                        </div>
+
+                        <div class="task-section">
+                            <h3>📝 Daily Tasks</h3>
+
+                            <div class="task-input">
+                                <input type="text" id="taskInput" placeholder="Add task..." />
+                                <button class="btn btn-primary" onclick="addTask()">Add</button>
+                            </div>
+
+                            <ul id="taskList"></ul>
+                        </div>
+
+                        <div class="assistant-section mt-4">
+                            <h3 class="assistant-title">🤖 Smart Assistant</h3>
+
+                            <div class="assistant-input">
+                                <input id="aiInput" placeholder="Ask something smart…" />
+                                <button class="btn btn-primary" onclick="handleAsk()">Ask</button>
+                            </div>
+
+                            <div class="assistant-chat">
+                                <div id="aiReply" class="assistant-reply">
+                                    Ask me about weather, tasks, or your day.
+                                </div>
+                            </div>
+
+                            
+                        </div>
+
+
+                    </section>
+                </div>
+
+            </div>
+
+
+        </div>
+        <script src="config.js"></script>
+        <script src="script.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+            crossorigin="anonymous"></script>
+</body>
+
+</html>
