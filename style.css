@@ -346,34 +346,32 @@ body.day .assistant-input input::placeholder {
 
   /* Search container */
 .search-box {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  margin-top: 12px;
-}
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
 
-/* Inner group */
-.search-inner {
-  display: flex;
-  gap: 8px;
-  width: 100%;
-  max-width: 320px;     /*  mobile-friendly width */
-}
+  .search-inner {
+    width: 100%;
+    max-width: 100%;
+    display: flex;
+    gap: 8px;
+  }
 
-/* Input */
-.search-inner input {
-  flex: 1;
-  padding: 10px 12px;
-  border-radius: 10px;
-  border: none;
-  font-size: 16px;      /* 👈 prevents iOS zoom */
-}
+  .search-inner input {
+    flex: 1;               /* 👈 KEY FIX */
+    min-width: 0;          /* 👈 prevents overflow */
+    padding: 10px 12px;
+    border-radius: 10px;
+    font-size: 16px;
+  }
 
-/* Button */
-.search-inner button {
-  padding: 10px 14px;
-  border-radius: 10px;
-}
+  .search-inner button {
+    flex-shrink: 0;        /* button keeps size */
+    padding: 10px 14px;
+    border-radius: 10px;
+    white-space: nowrap;
+  }
 
 
   img#icon {
