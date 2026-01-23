@@ -404,23 +404,21 @@ ${userMessage}
 
 
     try {
-        const res = await fetch(
-            "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent",
-            {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                    "X-goog-api-key": API_KEY
-                },
-                body: JSON.stringify({
-                    contents: [
-                        {
-                            parts: [{ text: prompt }]
-                        }
-                    ]
-                })
-            }
-        );
+    const response = await fetch("/api/ask", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        contents: [
+          {
+            parts: [
+              { text: userMessage }
+            ]
+          }
+        ]
+      })
+    });
 
         const data = await res.json();
         return (
