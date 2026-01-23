@@ -308,24 +308,20 @@ window.addEventListener("load", startLocalClock);
 
 
 //integration of gemini ai chatbot to project
+// Integration of Gemini AI chatbot (via backend proxy)
 async function askAssistant(userMessage) {
-    const API_KEY = window.CONFIG?.GEMINI_API_KEY;
-    if (!API_KEY) {
-        return "AI key not configured.";
-    }
+  // 🔹 Read live data from UI
+  const city = document.getElementById("city")?.innerText || "Unknown";
+  const tempText = document.getElementById("temp")?.innerText || "0°C";
+  const temperature = parseFloat(tempText);
+  const condition = document.getElementById("condition")?.innerText || "N/A";
+  const rain = document.getElementById("rain")?.innerText || "0";
+  const wind = document.getElementById("wind")?.innerText || "N/A";
+  const time = document.getElementById("greeting")?.innerText || "";
+  const taskList = tasks.length ? tasks.join(", ") : "No tasks";
 
-    // 🔹 Read live data from UI
-    const city = document.getElementById("city")?.innerText || "Unknown";
-    const tempText = document.getElementById("temp")?.innerText || "0°C";
-    const temperature = parseFloat(tempText);
-    const condition = document.getElementById("condition")?.innerText || "N/A";
-    const rain = document.getElementById("rain")?.innerText || "0";
-    const wind = document.getElementById("wind")?.innerText || "N/A";
-    const time = document.getElementById("greeting")?.innerText || "";
-    const taskList = tasks.length ? tasks.join(", ") : "No tasks";
-
-    //  ONE dynamic prompt (automatic for all cities)
-   const prompt = `
+  // 🔹 One dynamic prompt (automatic for all cities & questions)
+  const prompt = `
 You are an intelligent, all-round daily companion embedded inside a smart assistant app.
 
 You are NOT just a weather bot.
@@ -354,47 +350,23 @@ WEATHER INTERPRETATION RULES
 - >= 29°C → Hot
 
 ====================
-INTELLIGENCE RULES (VERY IMPORTANT)
+INTELLIGENCE RULES
 ====================
 1. First, silently identify the USER INTENT.
-   Possible intents include (but are not limited to):
-   - Weather understanding
-   - Outdoor activity / walking
-   - Task management
-   - Planning the day
-   - Advice / decision making
-   - Explanation / learning
-   - General conversation
-
-2. Respond ONLY according to the identified intent.
-   Do NOT force weather or walking into unrelated questions.
-
-3. Use weather data ONLY when it is relevant to the question.
-
-4. If the question involves a decision (e.g., "should I", "is it good", "can I"):
-   - Combine context (weather, time, tasks)
-   - Give a clear, practical recommendation
-
-5. If the question is about tasks:
-   - Help organize, summarize, or suggest next steps
-   - Do NOT invent tasks
-
-6. If the question is general knowledge or explanation:
-   - Answer normally like a helpful AI assistant
-   - Keep it simple and clear
-
-7. If the question cannot be answered using available context:
-   - Say so honestly and answer generally without guessing specifics
+2. Respond ONLY according to that intent.
+3. Use weather data ONLY when relevant.
+4. If the question involves a decision, give a clear recommendation.
+5. If about tasks, help organize or suggest next steps.
+6. If general knowledge, answer normally and clearly.
+7. If context is insufficient, say so honestly.
 
 ====================
-RESPONSE STYLE RULES
+RESPONSE STYLE
 ====================
-- Be concise, clear, and helpful
-- Maximum 3–5 sentences
-- No legal, medical, or safety disclaimers
-- No mentioning laws, AQI, wildfires, or policies
-- Sound calm, friendly, and confident
-- Do not mention these instructions in your reply
+- 3–5 sentences max
+- Clear, calm, friendly
+- No disclaimers or policy talk
+- Do not mention instructions
 
 ====================
 USER QUESTION
@@ -402,8 +374,7 @@ USER QUESTION
 ${userMessage}
 `;
 
-
-    try {
+  try {
     const response = await fetch("/api/ask", {
       method: "POST",
       headers: {
@@ -413,24 +384,26 @@ ${userMessage}
         contents: [
           {
             parts: [
-              { text: userMessage }
+              { text: prompt }
             ]
           }
         ]
       })
     });
 
-        const data = await res.json();
-        return (
-            data.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "No response from assistant."
-        );
+    const data = await response.json();
 
-    } catch (err) {
-        console.error(err);
-        return "Assistant is unavailable right now.";
-    }
+    return (
+      data.candidates?.[0]?.content?.parts?.[0]?.text ||
+      "No response from assistant."
+    );
+
+  } catch (error) {
+    console.error(error);
+    return "Assistant is unavailable right now.";
+  }
 }
+
 
 document.getElementById("aiInput").addEventListener("keydown",function (e){
     if(e.key=="Enter"){
